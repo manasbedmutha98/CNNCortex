@@ -3,9 +3,10 @@
 #include "CNNCortex.h"
 
 
+
+
 int main(){
-	matrixShape();
-	matrixPacker();
+	
 	
 	return 1;
 }

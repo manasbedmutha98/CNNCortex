@@ -3,7 +3,7 @@
 //the above construct is to ensure that this header file contents are only added once
 
 /*Insert Documentation*/
-int * matrixPacker(int * inputMatrix, int numberOfRows, int numberOfColumns, int height){
+int * matrixPacker(int * inputMatrix, int numberOfRows, int numberOfColumns , int height ){
 	int * packedMatrix;
 	//ToDo: logic here
 	
