@@ -4,6 +4,8 @@
 
 
 int main(){
+	matrixShape();
+	matrixPacker();
 	
 	return 1;
 }
