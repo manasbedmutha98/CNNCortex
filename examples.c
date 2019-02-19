@@ -29,9 +29,9 @@ void switchoff_LED()
 
 int main(){
 	
-	int Array1[2][2][1];
-	int Array2[2][2][1];
-	int Answer[2][2][1];
+	int Array1[1][2][2];
+	int Array2[1][2][2];
+	int Answer[1][2][2];
 	int i,j,k; 
 	int * packedArray1;
 	int * packedArray2;
@@ -46,9 +46,9 @@ int main(){
 
 	gating_LED();
 	
-	for( i=0;i<2;i++){
+	for( i=0;i<1;i++){
 		for(j=0;j<2;j++){
-			for(k=0;k<1;k++){
+			for(k=0;k<2;k++){
 				Array1[i][j][k]=i;
 				Array2[i][j][k]=j;
 				Answer[i][j][k]=i*j;
@@ -56,8 +56,8 @@ int main(){
 		}
 	}
 	
-	packedArray1 = matrixPacker((int *)Array1,2,2,1);
-	packedArray2 = matrixPacker((int *)Array2,2,2,1);
+	packedArray1 = matrixPacker((int *)Array1,1,2,2);
+	packedArray2 = matrixPacker((int *)Array2,1,2,2);
 	
 	matrixShape(Array1,shapeOfMyMatrix);
 	matrixShape(Array2,shapeOfMyMatrix);
@@ -73,11 +73,12 @@ int main(){
 	matrixElementwiseMul(myArrayElementWiseProduct,packedArray1,packedArray2);
 
 	int flag = 1;
-	for( i=0;i<2;i++){
+	for( i=0;i<1;i++){
 		for(j=0;j<2;j++){
-			for(k=0;k<1;k++){
+			for(k=0;k<2;k++){
 				if(Answer[i][j][k]!=myArrayElementWiseProduct[i][j][k]){
 					flag = 0;
+					break;
 				}
 			}
 		}
