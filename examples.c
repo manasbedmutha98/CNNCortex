@@ -2,30 +2,21 @@
 #include <MKL25Z4.h>
 #include "CNNCortex.h"
 
-void gating_LED()
-	{
-		SystemCoreClockUpdate();
-		SIM_SCGC5 |= 1<<10; 
-		
-		PORTB_PCR18 |= 1<<8; 
-		
-	        GPIOB_PDDR  |=1<<18;  
-		
-		
-		GPIOB_PSOR  |= 1<<18;   
-		
-	}
+void gating_LED(){
+	SystemCoreClockUpdate();
+	SIM_SCGC5 |= 1<<10; 
+	PORTB_PCR18 |= 1<<8; 
+	GPIOB_PDDR  |=1<<18;  
+	GPIOB_PSOR  |= 1<<18;   
+}
 
-void glow_LED()
-	{	
-		
-		GPIOB_PCOR  |= 1<<18;   //Resetting the Pin to 0 to switch on the LED
-	
-	}
-void switchoff_LED()
-	{
-		GPIOB_PSOR  |= 1<<18;	
-	}
+void glow_LED(){	
+	GPIOB_PCOR  |= 1<<18;   //Resetting the Pin to 0 to switch on the LED
+}
+
+void switchoff_LED(){
+	GPIOB_PSOR  |= 1<<18;	
+}
 
 int main(){
 	
@@ -72,11 +63,16 @@ int main(){
 	
 	matrixElementwiseMul(myArrayElementWiseProduct,packedArray1,packedArray2);
 
+	int base = &matrixElementwiseMul;
+
 	int flag = 1;
 	for( i=0;i<1;i++){
 		for(j=0;j<2;j++){
 			for(k=0;k<2;k++){
-				if(Answer[i][j][k]!=myArrayElementWiseProduct[i][j][k]){
+				//Address = Base + ((rowindex*col_size+colindex) * depth_size + depthindex) * Element_Size
+
+				int val = (base+3)+((k*2+j)*1+i)*4;
+				if(Answer[i][j][k]!=val){
 					flag = 0;
 					break;
 				}
