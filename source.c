@@ -4,7 +4,7 @@
 
 int main(){
 	
-	int myArray[3][10][10];
+	int myArray[2][2][1];
 	int i,j,k; 
 	int * packedMyArray;
 	int myArrayLength;
@@ -21,7 +21,7 @@ int main(){
 		}
 	}
 	
-	packedMyArray = matrixPacker((int *)myArray,3,10,10);
+	packedMyArray = matrixPacker((int *)myArray,2,2,1);
 	
 	matrixShape(packedMyArray,shapeOfMyMatrix);
 	
