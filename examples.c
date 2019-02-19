@@ -63,7 +63,7 @@ int main(){
 	
 	matrixElementwiseMul(myArrayElementWiseProduct,packedArray1,packedArray2);
 
-	int base = &matrixElementwiseMul;
+	//int base = &myArrayElementWiseProduct;
 
 	int flag = 1;
 	for( i=0;i<1;i++){
@@ -71,7 +71,8 @@ int main(){
 			for(k=0;k<2;k++){
 				//Address = Base + ((rowindex*col_size+colindex) * depth_size + depthindex) * Element_Size
 
-				int val = (base+3)+((k*2+j)*1+i)*4;
+				int val =* (myArrayElementWiseProduct+((2*2*i + 2*j + k)+3));
+				//int val = (base+3)+((k*2+j)*1+i)*4;
 				if(Answer[i][j][k]!=val){
 					flag = 0;
 					break;
@@ -82,9 +83,15 @@ int main(){
 
 	if(flag==0){
 		glow_LED();
+		__asm{
+			movs r0,0x045
+		}
 	}
 	else{
 		switchoff_LED();
+		__asm{
+			movs r0,0x050
+		}
 	}
 	
 	return 1;
