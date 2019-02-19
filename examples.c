@@ -77,12 +77,18 @@ int main(){
 		for(j=0;j<2;j++){
 			for(k=0;k<1;k++){
 				if(Answer[i][j][k]!=myArrayElementWiseProduct[i][j][k]){
-					glow_LED();
+					flag = 0;
 				}
 			}
 		}
 	}
 
+	if(flag==0){
+		glow_LED();
+	}
+	else{
+		switchoff_LED();
+	}
 	
 	return 1;
 }
