@@ -6,7 +6,7 @@
 
 
 /*Insert Documentation*/
-int * matrixPacker(int * inputMatrix, int height, int numberOfRows, int numberOfColumns ){
+int * matrixPacker(int * inputMatrix, unsigned int height, unsigned int numberOfRows, unsigned int numberOfColumns ){
 	int * packedMatrix;
 	int sizeOfArray=(numberOfRows*numberOfColumns*height + 3)*sizeof(int);
 	packedMatrix=malloc(sizeOfArray);
@@ -39,19 +39,19 @@ int matrixLength(int * inputMatrix){
 /*Insert Documentation*/
 int matrixSum(int * inputMatrix){
 	int sum=0;
-	int height=inputMatrix[0];
-	int rows=inputMatrix[1];
-	int columns=inputMatrix[2];
+	unsigned int height=inputMatrix[0];
+	unsigned int rows=inputMatrix[1];
+	unsigned int columns=inputMatrix[2];
 	
-	int length=height; //*rows*columns;
+	unsigned int length=height; //*rows*columns;
 	
 	__asm{ 
 		MULS length,rows
 		MULS length,columns
 	}
 	
-	int r0=(int)(inputMatrix+3);
-	int counter =0;
+	unsigned int r0=(unsigned int)(inputMatrix+3);
+	unsigned int counter =0;
 	int readInFromMemory=0;
 	__asm{		
 		LDR sum, [r0]
@@ -71,9 +71,9 @@ int matrixSum(int * inputMatrix){
 /*Insert Documentation*/
 void matrixElementwiseMul(int * result, int * inputMatrixOne, int * inputMatrixTwo){
 	//ToDo: add sanity check to the size of the matrix
-	int height=inputMatrix[0];
-	int rows=inputMatrix[1];
-	int columns=inputMatrix[2];
+	unsigned int height=inputMatrixOne[0];
+	unsigned int rows=inputMatrixOne[1];
+	unsigned int columns=inputMatrixOne[2];
 	
 	int length=height; //*rows*columns;
 	
@@ -82,6 +82,37 @@ void matrixElementwiseMul(int * result, int * inputMatrixOne, int * inputMatrixT
 		MULS length,columns
 	}
 	
+	result = malloc(length);
+	
+	result[0]=height;
+	result[1]=rows;
+	result[2]=columns;
+	
+	
+	unsigned int r0=(unsigned int)(inputMatrixOne+3);
+	unsigned int r1=(unsigned int)(inputMatrixTwo+3);
+	unsigned int r2=(unsigned int)(result+3);
+	unsigned int counter =0;
+	
+	int dataOne=0;
+	int dataTwo=0;
+	
+	__asm{		
+		
+		loop1:	
+		ADDS counter, 0x1
+		CMP counter, length
+		BGT exit1
+		LDR dataOne, [r0]
+		LDR dataTwo, [r1]
+		MULS dataOne, dataTwo
+		STR dataOne, [r2]		
+		ADDS r0, 0x4
+		ADDS r1, 0x4
+		ADDS r2, 0x4
+		B loop1
+		exit1:
+	}
 	
 }
 
