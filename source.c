@@ -1,39 +1,73 @@
 
-#include <MKL25Z4.h>
+//#include <MKL25Z4.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "CNNCortex.h"
 
 int main(){
 	
-	int myArray[2][2][1];
+	int myArray[1][1][2];
+	float myFloatArray[1][1][2];
 	int i,j,k; 
+	int x=0;
 	int * packedMyArray;
+	float * packedMyFloatArray;
 	int myArrayLength;
 	int myArraySum;
 	int * myArrayElementWiseProduct;
+	float *myFloatArraySum;
 	
-	int * shapeOfMyMatrix;
+	int * shapeOfMyMatrix;//=alloca(sizeof(int));
 	
-	for( i=0;i<3;i++){
-		for(j=0;j<10;j++){
-			for(k=0;k<10;k++){
-				myArray[i][j][k]=j;
-			}
-		}
+	myArray[0][0][0]=2;
+	myArray[0][0][1]=2;
+	myFloatArray[0][0][0]=2.0;
+	myFloatArray[0][0][1]=2.0;
+	
+	packedMyArray = matrixPacker((int *)myArray,1,1,2);
+	packedMyFloatArray = matrixFloatPacker((float *)myArray,1,1,2);
+	
+	shapeOfMyMatrix=matrixShape(packedMyArray);
+	if(shapeOfMyMatrix[2] ==2){
+		x = 0;
+	}else{
+		x =-1;
 	}
-	
-	packedMyArray = matrixPacker((int *)myArray,2,2,1);
-	
-	matrixShape(packedMyArray,shapeOfMyMatrix);
 	
 	myArrayLength=matrixLength(packedMyArray);
 	
+	if(myArrayLength ==2){
+		x = 0;
+	}else{
+		x =-1;
+	}
+	
 	myArraySum=matrixSum(packedMyArray);
 	
-	matrixElementwiseMul(myArrayElementWiseProduct,packedMyArray,packedMyArray);
+	if(myArraySum ==4){
+		x = 0;
+	}else{
+		x =-1;
+	}
+		
+	myArrayElementWiseProduct=matrixElementwiseMul(packedMyArray,packedMyArray);
+	int data = myArrayElementWiseProduct[3];
+		
+	if(data==4){
+		 x =0;
+	}else{
+		x = -1;
+	}	
 	
-	
-	
-	
+	/*
+		myFloatArraySum=matrixFloatSum(packedMyFloatArray);
+	int datax=*myFloatArraySum;
+	if(datax ==4){
+		x = 0;
+	}else{
+		x =-1;
+	}
+	*/
 	
 	return 1;
 }
