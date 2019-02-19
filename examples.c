@@ -22,6 +22,10 @@ void glow_LED()
 		GPIOB_PCOR  |= 1<<18;   //Resetting the Pin to 0 to switch on the LED
 	
 	}
+void switchoff_LED()
+	{
+		GPIOB_PSOR  |= 1<<18;	
+	}
 
 int main(){
 	
