@@ -2,6 +2,29 @@
 #include <MKL25Z4.h>
 #include "CNNCortex.h"
 
+void gating_LED()
+	{
+		SystemCoreClockUpdate();
+		SIM_SCGC5 |= 1<<10; //we are basically enbaling the clock to the pin   by adding 1 to the 10th bit. "|" is equivalent to  "+=" 
+		
+		PORTB_PCR18 |= 1<<8; //We are giving the input ot the mux such that the 18th pin of port B by changing the 8th bit of the register
+                         //  	to 1
+		
+	        GPIOB_PDDR  |=1<<18;  //Setting the 18th bit high to make the pin behave as an ouput
+		
+		
+		
+		GPIOB_PSOR  |= 1<<18;   //Making the LED switch off
+		
+	}
+
+void glow_LED()
+	{	
+		
+		GPIOB_PCOR  |= 1<<18;   //Resetting the Pin to 0 to switch on the LED
+	
+	}
+
 int main(){
 	
 	int Array1[2][2][1];
