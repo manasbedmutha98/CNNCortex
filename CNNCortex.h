@@ -119,7 +119,7 @@ float * matrixFloatSum(float * inputMatrix){
 	float * result;
 	result=malloc(sizeof(float));
 	
-	unsigned int sum=0;
+	unsigned float sum=0.0f;
 	 int height=*(int *)(inputMatrix);
 	 int rows=*(int *)(inputMatrix+1);
 	 int columns=*(int *)(inputMatrix+2);
@@ -151,7 +151,7 @@ float * matrixFloatSum(float * inputMatrix){
 		B loop1
 		exit1:
 	}
-	* (int *)result = sum;
+	* (float *)result = sum;
 
 	return result;
 }
