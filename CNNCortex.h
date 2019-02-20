@@ -42,6 +42,7 @@ int * matrixPacker(int * inputMatrix, unsigned int height, unsigned int numberOf
 	}	
 	return packedMatrix;
 }
+
 /*Insert Documentation*/
 float * matrixFloatPacker(float * inputMatrix, unsigned int height, unsigned int numberOfRows, unsigned int numberOfColumns ){
 	int i=3;
@@ -74,9 +75,16 @@ int * matrixShape(int * inputMatrix){
 
 /*Insert Documentation*/
 int matrixLength(int * inputMatrix){
-	int length=inputMatrix[2];
-	//ToDo: Logic here
+	unsigned int length=inputMatrix[0];
+	unsigned int rows=inputMatrix[1];
+	unsigned int columns=inputMatrix[2];
 	
+	
+	__asm{ 
+		MULS length, rows
+		MULS length, columns
+	}
+
 	return length;
 }
 
@@ -119,7 +127,7 @@ float * matrixFloatSum(float * inputMatrix){
 	float * result;
 	result=malloc(sizeof(float));
 	
-	unsigned float sum=0.0f;
+	unsigned float sum=0;
 	 int height=*(int *)(inputMatrix);
 	 int rows=*(int *)(inputMatrix+1);
 	 int columns=*(int *)(inputMatrix+2);
@@ -139,7 +147,7 @@ float * matrixFloatSum(float * inputMatrix){
 	unsigned int counter =0;
 	unsigned int readInFromMemory=0;
 	__asm{	
-		LDR sum, [location]
+		LDR sum, [location] // Might be a problem
 		loop1:	
 		ADDS counter, 0x1
 		CMP counter, length
